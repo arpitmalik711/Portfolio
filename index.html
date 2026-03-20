@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Portfolio — Design Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --surface: #111111;
+    --surface2: #161616;
+    --border: #222222;
+    --accent: #f97316;
+    --accent2: #3b82f6;
+    --text: #f0ede8;
+    --muted: #6b6863;
+    --grid: rgba(255,255,255,0.025);
+    --red: #ef4444;
+    --green: #22c55e;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 200;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1rem 1.25rem;
+    background: rgba(10,10,10,0.92);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.78rem; color: var(--accent);
+    letter-spacing: 0.05em; text-decoration: none; flex-shrink: 0;
+  }
+  .nav-links {
+    display: flex; gap: 1.1rem; list-style: none;
+    overflow-x: auto; scrollbar-width: none; padding-left: 0.5rem;
+  }
+  .nav-links::-webkit-scrollbar { display: none; }
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem; color: var(--muted);
+    text-decoration: none; letter-spacing: 0.08em;
+    text-transform: uppercase; transition: color 0.2s; white-space: nowrap;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    position: relative; z-index: 1;
+    min-height: 100svh;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 2rem 1.25rem 3rem; overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    object-fit: cover; width: 100%; height: 100%;
+    opacity: 0.18; filter: grayscale(1) contrast(1.2); z-index: 0;
+  }
+  .hero::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(to top, var(--bg) 35%, transparent 80%);
+    z-index: 1;
+  }
+  .hero-content { position: relative; z-index: 2; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem; color: var(--accent);
+    letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 1rem;
+  }
+  .hero-badge::before {
+    content: ''; display: block; width: 24px; height: 1px; background: var(--accent);
+  }
+  .hero h1 {
+    font-size: clamp(2.8rem, 12vw, 5.5rem);
+    font-weight: 800; line-height: 0.95;
+    letter-spacing: -0.03em; margin-bottom: 1.25rem;
+  }
+  .hero h1 span { color: var(--accent); }
+  .hero-intro {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.78rem; color: var(--muted);
+    line-height: 1.9; max-width: 360px; margin-bottom: 2rem;
+  }
+  .hero-cta {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    padding: 0.9rem 1.6rem;
+    background: var(--accent); color: #0a0a0a;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.73rem; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .hero-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(249,115,22,0.35); }
+
+  /* SECTION COMMONS */
+  section { position: relative; z-index: 1; padding: 4rem 1.25rem; }
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem; color: var(--accent);
+    letter-spacing: 0.15em; text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .section-label::after {
+    content: ''; flex: 1; height: 1px; background: var(--border); max-width: 60px;
+  }
+  .section-title {
+    font-size: clamp(1.8rem, 7vw, 3rem);
+    font-weight: 800; line-height: 1.05;
+    letter-spacing: -0.025em; margin-bottom: 2rem;
+  }
+  .section-sub {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem; color: var(--muted);
+    line-height: 1.85; margin-bottom: 2.5rem; max-width: 480px;
+  }
+
+  /* ABOUT */
+  .about { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .about-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
+  .about-photo { position: relative; aspect-ratio: 4/3; overflow: hidden; }
+  .about-photo img {
+    width: 100%; height: 100%; object-fit: cover;
+    filter: grayscale(0.4); transition: filter 0.4s;
+  }
+  .about-photo:hover img { filter: grayscale(0); }
+  .about-photo::after {
+    content: ''; position: absolute; inset: 0;
+    border: 1px solid var(--accent);
+    transform: translate(6px, 6px); pointer-events: none;
+  }
+  .about-text p {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.78rem; color: var(--muted); line-height: 1.9; margin-bottom: 1rem;
+  }
+  .skills-grid { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; }
+  .skill-tag {
+    padding: 0.35rem 0.75rem;
+    border: 1px solid var(--border);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.63rem; letter-spacing: 0.08em;
+    color: var(--muted); text-transform: uppercase;
+    transition: border-color 0.2s, color 0.2s; cursor: default;
+  }
+  .skill-tag:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* STATS */
+  .stats { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--surface); }
+  .stats-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1px; background: var(--border); border: 1px solid var(--border);
+  }
+  .stat-item { background: var(--surface2); padding: 1.75rem 1rem; text-align: center; }
+  .stat-number {
+    font-size: 2.4rem; font-weight: 800; color: var(--accent);
+    letter-spacing: -0.04em; line-height: 1;
+  }
+  .stat-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem; color: var(--muted);
+    letter-spacing: 0.08em; text-transform: uppercase; margin-top: 0.4rem;
+  }
+
+  /* SLIDESHOW */
+  .slideshow-section { background: var(--bg); }
+  .slideshow-wrap {
+    position: relative; width: 100%;
+    aspect-ratio: 16/9; overflow: hidden;
+    border: 1px solid var(--border); background: #000;
+  }
+  .slide { position: absolute; inset: 0; opacity: 0; transition: opacity 0.7s ease; }
+  .slide.active { opacity: 1; }
+  .slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .slide-caption {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 0.85rem 1rem;
+    background: linear-gradient(to top, rgba(0,0,0,0.88), transparent);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem; color: var(--text); letter-spacing: 0.06em;
+  }
+  .slide-controls {
+    display: flex; justify-content: space-between;
+    align-items: center; margin-top: 1rem;
+  }
+  .slide-btn {
+    background: none; border: 1px solid var(--border); color: var(--muted);
+    width: 40px; height: 40px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: border-color 0.2s, color 0.2s;
+  }
+  .slide-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .slide-dots { display: flex; gap: 0.4rem; align-items: center; flex-wrap: wrap; justify-content: center; }
+  .dot {
+    width: 6px; height: 6px;
+    background: var(--border); border-radius: 50%;
+    cursor: pointer; border: none;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .dot.active { background: var(--accent); transform: scale(1.4); }
+
+  /* PROJECTS */
+  .projects-list { display: flex; flex-direction: column; gap: 1.5rem; }
+  .project-card {
+    position: relative; overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--surface2);
+    text-decoration: none; color: inherit; display: block;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .project-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+  .project-img-wrap { overflow: hidden; }
+  .project-img {
+    width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block;
+    filter: grayscale(0.3);
+    transition: transform 0.5s, filter 0.3s;
+  }
+  .project-card:hover .project-img { transform: scale(1.04); filter: grayscale(0); }
+  .project-body { padding: 1.4rem; }
+  .project-index {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem; color: var(--accent); letter-spacing: 0.15em; margin-bottom: 0.4rem;
+  }
+  .project-title {
+    font-size: 1.25rem; font-weight: 800;
+    letter-spacing: -0.02em; margin-bottom: 0.5rem; line-height: 1.15;
+  }
+  .project-desc {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.71rem; color: var(--muted); line-height: 1.8; margin-bottom: 1.1rem;
+  }
+  .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem; }
+  .project-tag {
+    padding: 0.22rem 0.55rem;
+    background: rgba(249,115,22,0.1); border: 1px solid rgba(249,115,22,0.2);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.58rem; color: var(--accent); letter-spacing: 0.06em; text-transform: uppercase;
+  }
+  .project-cta {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem; color: var(--text); letter-spacing: 0.06em;
+    border-bottom: 1px solid var(--border); padding-bottom: 0.1rem;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .project-card:hover .project-cta { color: var(--accent); border-color: var(--accent); }
+
+  /* AWARDS */
+  .awards { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .awards-list { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); }
+  .award-item {
+    background: var(--surface2); padding: 1.4rem;
+    display: flex; flex-direction: column; gap: 0.4rem;
+    transition: background 0.2s;
+  }
+  .award-item:hover { background: #1b1b1b; }
+  .award-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.75rem; }
+  .award-icon { font-size: 1.4rem; flex-shrink: 0; }
+  .award-meta {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem; color: var(--accent);
+    letter-spacing: 0.1em; text-transform: uppercase;
+  }
+  .award-title { font-size: 1rem; font-weight: 700; letter-spacing: -0.01em; line-height: 1.25; }
+  .award-sub {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem; color: var(--muted); letter-spacing: 0.06em; margin-top: 0.15rem;
+  }
+  .award-body {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem; color: var(--muted); line-height: 1.75;
+  }
+  .award-badge {
+    display: inline-flex; align-items: center; gap: 0.3rem;
+    padding: 0.22rem 0.55rem;
+    background: rgba(249,115,22,0.08); border: 1px solid rgba(249,115,22,0.2);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.58rem; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase;
+    width: fit-content; margin-top: 0.3rem;
+  }
+
+  /* HARSH LEARNINGS */
+  .learnings { background: var(--bg); }
+  .learnings-intro {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.76rem; color: var(--muted); line-height: 1.9;
+    margin-bottom: 3rem; max-width: 500px;
+    border-left: 2px solid var(--red); padding-left: 1rem;
+  }
+  .learning-card {
+    border: 1px solid var(--border); background: var(--surface2);
+    margin-bottom: 2.5rem; overflow: hidden;
+  }
+  .learning-header {
+    padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border);
+    display: flex; align-items: flex-start; gap: 1rem;
+  }
+  .learning-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 2.2rem; font-weight: 700;
+    color: var(--border); line-height: 1; flex-shrink: 0;
+  }
+  .learning-title {
+    font-size: 1.15rem; font-weight: 800;
+    letter-spacing: -0.02em; line-height: 1.2;
+  }
+  .learning-sub {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem; color: var(--muted);
+    letter-spacing: 0.08em; text-transform: uppercase; margin-top: 0.25rem;
+  }
+  .phases-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1px; background: var(--border);
+  }
+  .phase {
+    background: var(--surface);
+    padding: 0.9rem; display: flex; flex-direction: column; gap: 0.5rem;
+  }
+  .phase-img {
+    width: 100%; aspect-ratio: 4/3; object-fit: cover;
+    display: block; filter: grayscale(0.2);
+  }
+  .phase-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 0.2rem 0.4rem; width: fit-content;
+  }
+  .phase-label.plan   { background: rgba(59,130,246,0.13); color: var(--accent2); border: 1px solid rgba(59,130,246,0.28); }
+  .phase-label.wrong  { background: rgba(239,68,68,0.13);  color: var(--red);     border: 1px solid rgba(239,68,68,0.28); }
+  .phase-label.happened{ background: rgba(249,115,22,0.1); color: var(--accent);  border: 1px solid rgba(249,115,22,0.22); }
+  .phase-label.fixed  { background: rgba(34,197,94,0.1);   color: var(--green);   border: 1px solid rgba(34,197,94,0.22); }
+  .phase-text {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem; color: var(--muted); line-height: 1.7;
+  }
+  .lesson-box {
+    padding: 1.2rem 1.5rem; border-top: 1px solid var(--border);
+    background: rgba(249,115,22,0.04);
+    display: flex; gap: 0.75rem; align-items: flex-start;
+  }
+  .lesson-icon { font-size: 1rem; flex-shrink: 0; margin-top: 0.15rem; }
+  .lesson-text {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem; color: var(--text); line-height: 1.8;
+  }
+  .lesson-text strong {
+    color: var(--accent); display: block; margin-bottom: 0.3rem;
+    letter-spacing: 0.05em; text-transform: uppercase; font-size: 0.6rem;
+  }
+
+  /* CONTACT */
+  .contact-box {
+    border: 1px solid var(--border); padding: 2rem 1.5rem;
+    background: var(--surface2); position: relative; overflow: hidden;
+  }
+  .contact-box::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0;
+    height: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2));
+  }
+  .contact-email {
+    font-size: clamp(1.1rem, 4.5vw, 1.8rem); font-weight: 800;
+    letter-spacing: -0.02em; color: var(--text);
+    text-decoration: none; display: block; margin: 1rem 0;
+    transition: color 0.2s; word-break: break-all;
+  }
+  .contact-email:hover { color: var(--accent); }
+  .contact-links { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.5rem; }
+  .contact-link {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem; color: var(--muted);
+    text-decoration: none; letter-spacing: 0.08em;
+    text-transform: uppercase; transition: color 0.2s;
+  }
+  .contact-link:hover { color: var(--text); }
+
+  /* FOOTER */
+  footer {
+    position: relative; z-index: 1;
+    border-top: 1px solid var(--border);
+    padding: 1.5rem 1.25rem;
+    display: flex; justify-content: space-between;
+    align-items: center; flex-wrap: wrap; gap: 0.5rem;
+  }
+  footer p {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem; color: var(--muted); letter-spacing: 0.06em;
+  }
+
+  /* REVEAL */
+  .reveal {
+    opacity: 0; transform: translateY(26px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+  .reveal-d1 { transition-delay: 0.1s; }
+  .reveal-d2 { transition-delay: 0.2s; }
+  .reveal-d3 { transition-delay: 0.3s; }
+
+  /* DESKTOP */
+  @media (min-width: 640px) {
+    nav { padding: 1rem 2rem; }
+    .hero { padding: 3rem 2rem 4rem; }
+    section { padding: 5rem 2rem; }
+    .about-grid { grid-template-columns: 1fr 1.5fr; gap: 3rem; align-items: center; }
+    .stats-grid { grid-template-columns: repeat(4, 1fr); }
+    footer { padding: 1.5rem 2rem; }
+  }
+  @media (min-width: 900px) {
+    nav { padding: 1rem 3rem; }
+    .hero { padding: 3rem 3rem 5rem; }
+    section { padding: 6rem 3rem; }
+    .projects-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .phases-grid { grid-template-columns: repeat(4, 1fr); }
+    footer { padding: 1.5rem 3rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">arpitmalik.eng</a>
+  <ul class="nav-links">
+    <li><a href="#about">Intro</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#awards">Awards</a></li>
+    <li><a href="#learnings">Learnings</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <img class="hero-bg"
+    src="hero.png"
+    alt="Engineering workshop" />
+  <div class="hero-content">
+
+    <p class="hero-badge">
+      Mechanical Engineer · Vehicle Design · FEA · Suspension · Fabrication
+    </p>
+
+    <h1>
+      Built in<br />
+      <span>CAD.</span><br />
+      Tested in<br />
+      the workshop.
+    </h1>
+
+    <p class="hero-intro">
+      Chief Design Engineer — TEAM DAEDALUS RACING. Experience in structural design,
+      suspension systems, impact simulation, and hands-on fabrication.
+      I design parts that are not only analysed, but built, welded,
+      and tested in real conditions.
+    </p>
+
+    <a href="#projects" class="hero-cta">
+      View My Work
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+        <path d="M3 8h10M9 4l4 4-4 4"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"/>
+      </svg>
+    </a>
+
+  </div>
+</header>
+
+<!-- INTRO -->
+<section class="about" id="about">
+  <div class="about-grid">
+
+    <div class="about-photo reveal">
+      <img src="hero2.png" alt="Engineer at work" />
+    </div>
+
+    <div class="about-text reveal reveal-d1">
+
+      <p class="section-label">Who I Am</p>
+
+      <h2 class="section-title">
+        Engineering built<br/>
+        in the workshop.
+      </h2>
+
+      <p>
+        I'm a Mechanical Engineering student focused on design engineering,
+        with hands-on experience in Baja ATV vehicle development,
+        structural design, and suspension systems.
+      </p>
+
+      <p>
+        I have worked as Suspension Lead and later Chief Design Engineer
+        in my Baja team, where my work involved CAD modelling,
+        FEA simulation, impact analysis, and real fabrication in the garage.
+        I enjoy designing parts that are not only correct in theory,
+        but also strong, manufacturable, and reliable in real conditions.
+      </p>
+
+      <p>
+        My interests include vehicle structures, suspension design,
+        finite element analysis, and prototype development.
+        I am always looking for opportunities where I can learn by building,
+        testing, and improving real mechanical systems.
+      </p>
+
+      <div class="skills-grid">
+        <span class="skill-tag">SolidWorks</span>
+        <span class="skill-tag">CATIA</span>
+        <span class="skill-tag">ANSYS / FEA</span>
+        <span class="skill-tag">Suspension Design</span>
+        <span class="skill-tag">Vehicle Design</span>
+        <span class="skill-tag">GD&amp;T</span>
+        <span class="skill-tag">Fabrication</span>
+        <span class="skill-tag">MATLAB</span>
+        <span class="skill-tag">Workshop</span>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="stats-grid">
+
+    <div class="stat-item reveal">
+      <div class="stat-number">10+</div>
+      <div class="stat-label">Mechanical Designs</div>
+    </div>
+
+    <div class="stat-item reveal reveal-d1">
+      <div class="stat-number">30+</div>
+      <div class="stat-label">FEA / Impact Simulations</div>
+    </div>
+
+    <div class="stat-item reveal reveal-d2">
+      <div class="stat-number">10+ Months</div>
+      <div class="stat-label">Baja Leadership</div>
+    </div>
+
+
+    <div class="stat-item reveal reveal-d4">
+      <div class="stat-number">300+</div>
+      <div class="stat-label">Hours Fabrication / Garage</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- GALLERY SLIDESHOW -->
+<section class="slideshow-section" id="gallery">
+  <p class="section-label">Gallery</p>
+  <h2 class="section-title reveal">My Engineering<br/>in Pictures.</h2>
+  <div class="slideshow-wrap reveal">
+    <div class="slide active">
+      <img src="slide.img1.jpeg" alt="Baja ATV Fabrication" />
+      <div class="slide-caption">AIR 1 (S&T) — ATVC 2025</div>
+    </div>
+    <div class="slide">
+      <img src="slide.img2.jpeg" alt="CAD workstation" />
+      <div class="slide-caption">Rolling Chessis ATV — Workshop Session</div>
+    </div>
+    <div class="slide">
+      <img src="slide.img3.jpeg" alt="Go-kart chassis" />
+      <div class="slide-caption">Suspension Fabrication — After Rollcage Fabrication</div>
+    </div>
+    <div class="slide">
+      <img src="slide.img4.jpeg" alt="Workshop" />
+      <div class="slide-caption">ATV Design Assembly — Solidworks</div>
+    </div>
+    <div class="slide">
+      <img src="slide.img5.jpeg" alt="3D printing" />
+      <div class="slide-caption">Panals + Chessis Febrication — First Prototype E-Mpoed</div>
+    </div>
+    <div class="slide">
+      <img src="slide.img6.jpeg" alt="Precision tools" />
+      <div class="slide-caption">First Prototype Testing — NSUT Campus</div>
+    </div>
+    <div class="slide">
+      <img src="slide.img7.jpeg" alt="Precision tools" />
+      <div class="slide-caption">BAJA ATV Fabrication — E Moped Testing</div>
+    </div>
+  </div>
+  <div class="slide-controls reveal">
+    <button class="slide-btn" id="prevBtn" aria-label="Previous">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="slide-dots" id="dotContainer"></div>
+    <button class="slide-btn" id="nextBtn" aria-label="Next">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" style="background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <p class="section-label">Selected Work</p>
+  <h2 class="section-title reveal">Projects.</h2>
+  <p class="section-sub reveal">Click any project card to open its full case study website.</p>
+
+  <div class="projects-list">
+
+    <a class="project-card reveal" href="https://arpitmalik711.github.io/Dunebuggy.Arpit/" target="_blank" rel="noopener">
+      <div class="project-img-wrap">
+        <img class="project-img" src="hero-buggy.png" alt="OFF-ROAD Dune Buggy" />
+      </div>
+      <div class="project-body">
+        <p class="project-index">— 01 / 03</p>
+        <h3 class="project-title">Dune Buggy OFF-ROAD</h3>
+        <p class="project-desc">Designed from concept to Final CAD Prototype with FEA optimised Roll Cage</p>
+        <div class="project-tags">
+          <span class="project-tag">SolidWorks</span>
+          <span class="project-tag">FEA</span>
+          <span class="project-tag">Catia Ergonomics</span>
+          <span class="project-tag">Lotus Shark</span>
+        </div>
+        <span class="project-cta">Open Project Site →</span>
+      </div>
+    </a>
+
+    <a class="project-card reveal reveal-d1" href="https://your-project-2-url.com" target="_blank" rel="noopener">
+      <div class="BAJA ATV 2026 ">
+        <img class="project-img" src="ATVpage.cover.jpeg" alt="BAJA ATV" />
+      </div>
+      <div class="project-body">
+        <p class="project-index">— 02 / 03</p>
+        <h3 class="project-title">BAJA ATV 2026</h3>
+        <p class="project-desc">Lightweight tubular steel chassis with torsional rigidity and crash simulation studies. 15% weight reduction over benchmark.</p>
+        <div class="project-tags">
+          <span class="project-tag">Solidworks</span>
+          <span class="project-tag">ANSYS</span>
+         <span class="project-tag">CATIA</span>
+          <span class="project-tag">Lotus Shark</span>
+          <span class="project-tag">Vehicle Dynamics</span>
+        </div>
+        <span class="project-cta">Open Project Site →</span>
+      </div>
+    </a>
+
+    <a class="project-card reveal reveal-d2"
+   href="moped.html"
+   target="_blank"
+   rel="noopener">
+
+  <div class="project-img-wrap">
+    <img
+      class="project-img"
+      src="EMopedpage.cover.jpeg"
+      alt="Electric Delivery Moped Prototype"
+    />
+  </div>
+
+  <div class="project-body">
+
+    <p class="project-index">— 03 / 03</p>
+
+    <h3 class="project-title">
+      Electric Delivery Moped ⚡
+    </h3>
+
+    <p class="project-desc">
+      Designed and developed an electric delivery vehicle prototype under
+      tight cost and time constraints. Worked on chassis design,
+      suspension integration, battery packaging, fabrication support,
+      and real-world testing with multiple design iterations.
+    </p>
+
+    <div class="project-tags">
+      <span class="project-tag">Vehicle Design</span>
+      <span class="project-tag">Fabrication</span>
+      <span class="project-tag">Suspension</span>
+      <span class="project-tag">SolidWorks</span>
+      <span class="project-tag">Prototype</span>
+    </div>
+
+    <span class="project-cta">
+      View Case Study →
+    </span>
+
+  </div>
+
+</a>
+<a class="project-card reveal reveal-d1" href="#" target="_blank" rel="noopener">
+      
+      <div class="Electric Scooter 2026">
+        <img class="project-img" src="upcoming.project.cover2.jpeg" alt="Electric Scooter Chassis" />
+      </div>
+
+      <div class="project-body">
+
+        <p class="project-index">— 04</p>
+
+        <h3 class="project-title">
+          Electric Scooter — Chassis Design (In Progress)
+        </h3>
+
+        <p class="project-desc">
+          Self-initiated electric scooter project focused on chassis stiffness,
+          suspension mounting geometry, and impact load resistance.
+          Frame is being developed in CAD and validated using FEA before fabrication.
+          Currently in chassis design and structural validation phase.
+        </p>
+
+        <div class="project-tags">
+
+          <span class="project-tag">SolidWorks</span>
+          <span class="project-tag">ANSYS</span>
+          <span class="project-tag">Chassis Design</span>
+          <span class="project-tag">FEA</span>
+          <span class="project-tag">In Progress</span>
+
+        </div>
+
+        <span class="project-cta">
+          Project in Progress 🚧
+        </span>
+
+      </div>
+
+</a>
+
+  </div>
+</section>
+
+<!-- AWARDS -->
+<section class="awards" id="awards">
+
+  <p class="section-label">Recognition</p>
+
+  <h2 class="section-title reveal">
+    Awards &amp;<br/>Achievements.
+  </h2>
+
+  <p class="section-sub reveal">
+    Early-career recognition that validates the direction I'm heading — proof that rigorous engineering thinking gets noticed.
+  </p>
+
+
+
+  <div class="awards-list">
+
+
+    <!-- AWARD 1 -->
+
+    <div class="award-item reveal">
+
+      <div class="award-top">
+
+        <div>
+
+          <div class="award-title">
+            3rd Position — CAD Battle (Invictus’25)
+          </div>
+
+          <div class="award-sub">
+            Technical Council · Delhi Technological University · 2025
+          </div>
+
+        </div>
+
+        <span class="award-icon">🥉</span>
+
+      </div>
+
+      <p class="award-body">
+        Secured 3rd position in CAD Battle at Invictus’25. Recognized for
+        strong CAD modelling, precision design, and engineering problem solving.
+      </p>
+
+      <span class="award-badge">
+        ⭐ Top 3 — University Level Competition
+      </span>
+
+    </div>
+
+
+
+    <!-- AWARD 2 -->
+
+    <div class="award-item reveal reveal-d1">
+
+      <div class="award-top">
+
+        <div>
+
+          <div class="award-title">
+            AIR 1 — Suspension & Traction Test (ATVC 2025)
+          </div>
+
+          <div class="award-sub">
+            All Terrain Vehicle Challenge · Bhopal · 2025
+          </div>
+
+        </div>
+
+        <span class="award-icon">🏆</span>
+
+      </div>
+
+      <p class="award-body">
+        Steering & Suspension Lead for Baja ATV. Achieved All India Rank 1 in
+        Suspension and Traction Test. Worked on suspension geometry,
+        load calculations, and performance validation.
+      </p>
+
+      <span class="award-badge">
+        ⭐ AIR 1 — National Level Event
+      </span>
+
+    </div>
+
+
+
+    <!-- ✅ AWARD 3 (BAJA 2025) -->
+
+    <div class="award-item reveal reveal-d2">
+
+      <div class="award-top">
+
+        <div>
+
+          <div class="award-title">
+            AIR 19 — BAJA 2025
+          </div>
+
+          <div class="award-sub">
+            SAE BAJA India · 100+ Colleges · 2025
+          </div>
+
+        </div>
+
+        <span class="award-icon">🏁</span>
+
+      </div>
+
+      <p class="award-body">
+        Member of Baja ATV design team. Team secured All India Rank 19 among
+        100+ participating colleges. Contributed to suspension and vehicle
+        design validation.
+      </p>
+
+      <span class="award-badge">
+        ⭐ National Level Competition
+      </span>
+
+    </div>
+
+
+
+    <!-- AWARD 4 (BAJA 2026) -->
+
+    <div class="award-item reveal reveal-d3">
+
+      <div class="award-top">
+
+        <div>
+
+          <div class="award-title">
+            AIR 14 — BAJA 2026
+          </div>
+
+          <div class="award-sub">
+            SAE BAJA · India · 2026
+          </div>
+
+        </div>
+
+        <span class="award-icon">🏆</span>
+
+      </div>
+
+      <p class="award-body">
+        Chief Design Engineer for Baja ATV 2026. Led complete vehicle design
+        including chassis, suspension, and packaging. Team secured All India
+        Rank 14 at national BAJA competition.
+      </p>
+
+      <span class="award-badge">
+        ⭐ Chief Design Engineer
+      </span>
+
+    </div>
+
+
+
+  </div>
+
+</section>
+<!-- HARSH LEARNINGS -->
+<section class="learnings" id="learnings">
+  <p class="section-label">Real Experience</p>
+  <h2 class="section-title reveal">Harsh<br/>Learnings.</h2>
+  <p class="learnings-intro reveal">
+    These are the moments I'm most grateful for — not despite the failures, but because of them. Every mistake below is a lesson no textbook could have taught me. This is how I actually learned to engineer.
+  </p>
+
+  <!-- Learning 1 -->
+  <div class="learning-card reveal">
+    <div class="learning-header">
+      <div class="learning-num">01</div>
+      <div>
+        <div class="learning-title">Upper A-Arm Bending</div>
+        <div class="learning-sub">Baja ATV — Suspension and Traction Test</div>
+      </div>
+    </div>
+    <div class="phases-grid">
+      <div class="phase">
+        <span class="phase-label plan">📐 What I Planned</span>
+        <img src="learning.Armbending.planned.jpeg" alt="CAD plan" class="phase-img" />
+        <p class="phase-text"> Initial suspension geometry designed for 21 in AFCO shocks.
+FEA used to validate arm strength and mounting loads..</p>
+      </div>
+      <div class="phase">
+        <span class="phase-label wrong">💥 Went Wrong</span>
+        <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=400&q=70" alt="Misaligned parts" class="phase-img" />
+        <p class="phase-text">3D-printed parts had cumulative tolerance errors. Joints were either too tight or too loose to function.</p>
+      </div>
+      <div class="phase">
+        <span class="phase-label wrong">💥 replacement </span>
+        <img src="learning.Armbending.replaced.jpeg" alt="Misaligned parts" class="phase-img" />
+        <p class="phase-text">Replaced with fox(16in) -> Damper Pivot shifted towards centre of arm + bracket length increased → moment increased → bending stress increased</p>
+      </div>
+      <div class="phase">
+        <span class="phase-label happened">⚙️ What Happened</span>
+        <img src="learning.Armbending.happened.jpeg" alt="Rework" class="phase-img" />
+        <p class="phase-text">During suspension & traction test, high obstacle impact caused
+upper A-arm pipes to bend due to increased bending moment.</p>
+      </div>
+      <div class="phase">
+        <span class="phase-label fixed">✅ What I Did</span>
+        <img src="https://images.unsplash.com/photo-1530124566582-a618bc2615dc?w=400&q=70" alt="Fixed arm" class="phase-img" />
+        <p class="phase-text">Reinforced arm by welding an additional primary pipe (29.2 mm dia)
+to both members to increase bending stiffness.
+Fix performed on-site during competition.</p>
+      </div>
+    </div>
+    <div class="lesson-box">
+      <span class="lesson-icon">💡</span>
+      <p class="lesson-text">
+        <strong>What I Learned</strong>
+        Design changes without re-validation can lead to unexpected failure.
+Always re-check load path, bending moment, and stiffness after geometry changes..
+      </p>
+    </div>
+  </div>
+
+  <!-- Learning 2 -->
+  <div class="learning-card reveal">
+    <div class="learning-header">
+      <div class="learning-num">02</div>
+      <div>
+        <div class="learning-title">The Weld That Lied</div>
+        <div class="learning-sub">Go-Kart Chassis — Fabrication Phase</div>
+      </div>
+    </div>
+    <div class="phases-grid">
+      <div class="phase">
+        <span class="phase-label plan">📐 What I Planned</span>
+        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&q=70" alt="Chassis plan" class="phase-img" />
+        <p class="phase-text">A symmetrically welded tubular frame matching the CATIA model. Clean, rigid, aligned.</p>
+      </div>
+      <div class="phase">
+        <span class="phase-label wrong">💥 Went Wrong</span>
+        <img src="https://images.unsplash.com/photo-1591267990532-e5bdb1b0ceb8?w=400&q=70" alt="Warped frame" class="phase-img" />
+        <p class="phase-text">Welding heat caused thermal distortion. The frame twisted 4mm off-axis. The simulator said fine — the welder did not.</p>
+      </div>
+      <div class="phase">
+        <span class="phase-label happened">⚙️ What Happened</span>
+        <img src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=400&q=70" alt="Measuring distortion" class="phase-img" />
+        <p class="phase-text">Wheel alignment was off. Discovered during fitment — after painting. Full rework required at the worst possible time.</p>
+      </div>
+      <div class="phase">
+        <span class="phase-label fixed">✅ What I Did</span>
+        <img src="https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?w=400&q=70" alt="Corrected frame" class="phase-img" />
+        <p class="phase-text">Introduced weld sequencing and pre-tack jigs. Built a flat-table jigging system for alignment during welding.</p>
+      </div>
+    </div>
+    <div class="lesson-box">
+      <span class="lesson-icon">💡</span>
+      <p class="lesson-text">
+        <strong>What I Learned</strong>
+        Software doesn't simulate human error or process variability. Talk to fabricators before you finalise a design — not after the paint has dried.
+      </p>
+    </div>
+  </div>
+
+  <!-- Learning 3 -->
+  <div class="learning-card reveal">
+    <div class="learning-header">
+      <div class="learning-num">03</div>
+      <div>
+        <div class="learning-title">The Calculation That Felt Right</div>
+        <div class="learning-sub">Upper A-Arm Bending — Suspension Test Baja 2026</div>
+      </div>
+    </div>
+    <div class="phases-grid">
+      <div class="phase">
+        <span class="phase-label plan">📐 What I Planned</span>
+        <img src="https://images.unsplash.com/photo-1495592822108-9e6261896da8?w=400&q=70" alt="Thermal calcs" class="phase-img" />
+        <p class="phase-text">An 8 kW shell-and-tube exchanger sized using the LMTD method in MATLAB. Numbers looked clean.</p>
+      </div>
+      <div class="phase">
+        <span class="phase-label wrong">💥 Went Wrong</span>
+        <img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?w=400&q=70" alt="Test failure" class="phase-img" />
+        <p class="phase-text">Actual heat transfer was 30% lower than calculated. Fouling factors ignored. Flow regime assumed, not verified.</p>
+      </div>
+      <div class="phase">
+        <span class="phase-label happened">⚙️ What Happened</span>
+        <img src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=400&q=70" alt="Testing" class="phase-img" />
+        <p class="phase-text">Prototype failed performance testing. Had to re-run the entire analysis under time pressure and present corrected results.</p>
+      </div>
+      <div class="phase">
+        <span class="phase-label fixed">✅ What I Did</span>
+        <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=400&q=70" alt="CFD validation" class="phase-img" />
+        <p class="phase-text">Ran CFD validation, accounted for fouling resistance, recalculated with verified Reynolds number. Redesigned baffle spacing.</p>
+      </div>
+    </div>
+    <div class="lesson-box">
+      <span class="lesson-icon">💡</span>
+      <p class="lesson-text">
+        <strong>What I Learned</strong>
+        Assumptions are the enemy of accuracy. Never present results you haven't stress-tested yourself. Real systems have fouling, transitions, and boundary conditions that spreadsheets don't warn you about.
+      </p>
+    </div>
+  </div>
+
+</section>
+
+<!-- CONTACT -->
+<section id="contact" style="background:var(--surface);border-top:1px solid var(--border);">
+  <p class="section-label">Get In Touch</p>
+  <h2 class="section-title reveal">Let's build<br/>something.</h2>
+
+  <div class="contact-box reveal">
+
+    <p style="font-family:'Space Mono',monospace;font-size:0.75rem;color:var(--muted);">
+      Open to internships, freelance work, collaborations & engineering challenges.
+    </p>
+
+    <!-- EMAIL -->
+<a href="mailto:arpit.malik.ug23@nsut.ac.in?subject=Project%20/%20Freelance%20Inquiry%20from%20Portfolio" 
+   class="contact-email">
+  arpit.malik.ug23@nsut.ac.in
+</a>
+
+<p style="font-family:'Space Mono',monospace;font-size:0.7rem;color:var(--muted);">
+  Find me on:
+</p>
+
+<div class="contact-links">
+
+      <!-- LINKEDIN -->
+      <a href="https://www.linkedin.com/in/arpit-malik-bb6939303/" class="contact-link" target="_blank">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+          <rect x="2" y="9" width="4" height="12"/>
+          <circle cx="4" cy="4" r="2"/>
+        </svg>
+        LinkedIn
+      </a>
+
+      <!-- GITHUB -->
+      <a href="https://github.com/your-github" class="contact-link" target="_blank">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+        </svg>
+        GitHub
+      </a>
+
+      <!-- RESUME -->
+      <a href="Arpit_Malik_resume.pdf" class="contact-link" target="_blank">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+          <line x1="16" y1="13" x2="8" y2="13"/>
+          <line x1="16" y1="17" x2="8" y2="17"/>
+        </svg>
+        Resume / CV
+      </a>
+
+    </div>
+
+  </div>
+</section>
+
+
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 — Arpit Malik</p>
+  <p>Design Engineer · Mechanical Engineering</p>
+</footer>
+
+
+
+<script>
+  /* SLIDESHOW */
+  const slides = document.querySelectorAll('.slide');
+  const dotContainer = document.getElementById('dotContainer');
+  let current = 0, timer;
+
+  slides.forEach((_, i) => {
+    const dot = document.createElement('button');
+    dot.className = 'dot' + (i === 0 ? ' active' : '');
+    dot.setAttribute('aria-label', 'Slide ' + (i + 1));
+    dot.addEventListener('click', () => goTo(i));
+    dotContainer.appendChild(dot);
+  });
+
+  function goTo(n) {
+    slides[current].classList.remove('active');
+    dotContainer.children[current].classList.remove('active');
+    current = (n + slides.length) % slides.length;
+    slides[current].classList.add('active');
+    dotContainer.children[current].classList.add('active');
+    clearInterval(timer);
+    timer = setInterval(() => goTo(current + 1), 4500);
+  }
+
+  document.getElementById('prevBtn').addEventListener('click', () => goTo(current - 1));
+  document.getElementById('nextBtn').addEventListener('click', () => goTo(current + 1));
+  timer = setInterval(() => goTo(current + 1), 4500);
+
+  /* SCROLL REVEAL */
+  const reveals = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver(
+    entries => entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('visible');
+    }),
+    { threshold: 0.08 }
+  );
+
+  reveals.forEach(el => obs.observe(el));
+</script>
+
+</body>
+</html>
