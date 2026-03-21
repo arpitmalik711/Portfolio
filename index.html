@@ -591,7 +591,7 @@
     </div>
     <div class="slide">
       <img src="slide.img2.jpeg" alt="CAD workstation" />
-      <div class="slide-caption">Rolling Chessis ATV — Workshop Session</div>
+      <div class="slide-caption">Rolling chassis ATV — Workshop Session</div>
     </div>
     <div class="slide">
       <img src="slide.img3.jpeg" alt="Go-kart chassis" />
@@ -603,7 +603,7 @@
     </div>
     <div class="slide">
       <img src="slide.img5.jpeg" alt="3D printing" />
-      <div class="slide-caption">Panels + Chessis Febrication — First Prototype E-Mpoed</div>
+      <div class="slide-caption">Panels + chassis fabrication — First Prototype E-moped</div>
     </div>
     <div class="slide">
       <img src="slide.img6.jpeg" alt="Precision tools" />
@@ -831,7 +831,7 @@
       </div>
 
       <p class="award-body">
-        Steering & Suspension Lead for Baja ATV. Achieved All India Rank 1 in
+        As Steering & Suspension Lead for Baja ATV. Achieved All India Rank 1 in
         Suspension and Traction Test. Worked on suspension geometry,
         load calculations, and performance validation.
       </p>
@@ -1005,8 +1005,8 @@
     {src:'learning.Armbending.FEA1.jpg', caption:'Step 1: Initial Mesh'},
     {src:'learning.Armbending.FEA2.jpg', caption:'Step 2: Material Assignment'},
     {src:'learning.Armbending.FEA3.jpg', caption:'Step 3: Boundary Conditions'},
-    {src:'learning.Armbending.FEA4.jpg', caption:'Step 4: Load Application'},
-    {src:'learning.Armbending.FEA5.jpg', caption:'Step 5: Mesh Convergence Check'},
+    {src:'learning.Armbending.FEA4.jpg', caption:'Step 4: Force Calculated Using Energy Method was used as BC in TRANSIENT STRUCTURAL Analysis.'},
+    {src:'learning.Armbending.FEA5.jpg', caption:'Step 5: Deformation Results'},
     {src:'learning.Armbending.FEA6.jpg', caption:'Step 6: Result Postprocessing'},
     {src:'learning.Armbending.FEA7.jpg', caption:'Step 7: Stress Contours & Analysis'}
   ];
@@ -1101,45 +1101,71 @@
   </div>
 </div>
 
-  <!-- Learning 3 -->
-  <div class="learning-card reveal">
-    <div class="learning-header">
-      <div class="learning-num">03</div>
-      <div>
-        <div class="learning-title">The Calculation That Felt Right</div>
-        <div class="learning-sub">Upper A-Arm Bending — Suspension Test Baja 2026</div>
-      </div>
-    </div>
-    <div class="phases-grid">
-      <div class="phase">
-        <span class="phase-label plan">📐 What I Planned</span>
-        <img src="https://images.unsplash.com/photo-1495592822108-9e6261896da8?w=400&q=70" alt="Thermal calcs" class="phase-img" />
-        <p class="phase-text">An 8 kW shell-and-tube exchanger sized using the LMTD method in MATLAB. Numbers looked clean.</p>
-      </div>
-      <div class="phase">
-        <span class="phase-label wrong">💥 Went Wrong</span>
-        <img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?w=400&q=70" alt="Test failure" class="phase-img" />
-        <p class="phase-text">Actual heat transfer was 30% lower than calculated. Fouling factors ignored. Flow regime assumed, not verified.</p>
-      </div>
-      <div class="phase">
-        <span class="phase-label happened">⚙️ What Happened</span>
-        <img src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=400&q=70" alt="Testing" class="phase-img" />
-        <p class="phase-text">Prototype failed performance testing. Had to re-run the entire analysis under time pressure and present corrected results.</p>
-      </div>
-      <div class="phase">
-        <span class="phase-label fixed">✅ What I Did</span>
-        <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=400&q=70" alt="CFD validation" class="phase-img" />
-        <p class="phase-text">Ran CFD validation, accounted for fouling resistance, recalculated with verified Reynolds number. Redesigned baffle spacing.</p>
-      </div>
-    </div>
-    <div class="lesson-box">
-      <span class="lesson-icon">💡</span>
-      <p class="lesson-text">
-        <strong>What I Learned</strong>
-        Assumptions are the enemy of accuracy. Never present results you haven't stress-tested yourself. Real systems have fouling, transitions, and boundary conditions that spreadsheets don't warn you about.
-      </p>
+<!-- Learning 3 -->
+<div class="learning-card reveal">
+  <div class="learning-header">
+    <div class="learning-num">03</div>
+    <div>
+      <div class="learning-title">The Bend That Shouldn't Be Welded</div>
+      <div class="learning-sub">Chassis Fabrication — E-Moped Frame</div>
     </div>
   </div>
+
+  <div class="phases-grid">
+
+    <div class="phase">
+      <span class="phase-label plan">📐 What I Planned</span>
+      <img src="pipe.bend.planned.jpeg" alt="Chassis pipe bending" class="phase-img" />
+      <p class="phase-text">
+        The main chassis pipe required bending at a specific angle and radius while still carrying
+        most of the structural load. Proper pipe bending was required to maintain strength and geometry.
+      </p>
+    </div>
+
+    <div class="phase">
+      <span class="phase-label wrong">💥 Went Wrong</span>
+      <img src="pipe.bend.cut.jpeg" alt="Cut and weld bending" class="phase-img" />
+      <p class="phase-text">
+        Due to lack of bending machine, the pipe was cut from the inner side,
+        manually bent to shape, and then welded. This shortcut helped fabrication,
+        but introduced a welded joint exactly at the high-stress bend region.
+      </p>
+    </div>
+
+    <div class="phase">
+      <span class="phase-label happened">⚙️ What Happened</span>
+      <img src="pipe.bend.failurearea.jpeg" alt="Stress at bend" class="phase-img" />
+      <p class="phase-text">
+        The cut-and-weld method disturbed the original cross-section continuity.
+        The neutral axis shifted inward and higher tensile stress developed at the
+        outer fiber of the bend. The weld zone created stress concentration,
+        reducing fatigue strength of the load-carrying member.
+      </p>
+    </div>
+
+    <div class="phase">
+      <span class="phase-label fixed">✅ What I Did</span>
+      <img src="pipe.bend.machine.jpeg" alt="Proper bending machine" class="phase-img" />
+      <p class="phase-text">
+        I arranged proper pipe bending using a bending machine to maintain
+        uniform section, correct bend radius, and continuous grain flow.
+        This improved structural reliability and increased fatigue life
+        of the chassis member.
+      </p>
+    </div>
+
+  </div>
+
+  <div class="lesson-box">
+    <span class="lesson-icon">💡</span>
+    <p class="lesson-text">
+      <strong>What I Learned</strong>
+      In load-carrying structures, fabrication shortcuts can reduce strength even if geometry looks correct.
+      Maintaining section continuity during bending is critical to avoid stress concentration and fatigue failure.
+      Manufacturing method is part of design, not a separate step.
+    </p>
+  </div>
+</div>
 
 </section>
 
