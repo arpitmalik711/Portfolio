@@ -976,7 +976,7 @@
   <div class="learning-header">
     <div class="learning-num">01</div>
     <div>
-      <div class="learning-title">Upper A-Arm Bending</div>
+      <div class="learning-title">Upper A-Arm Bending (BAJA 2026)</div>
       <div class="learning-sub">Baja ATV — Suspension and Traction Test</div>
     </div>
   </div>
@@ -991,7 +991,7 @@
     <div class="phase">
       <span class="phase-label wrong">💥 Went Wrong</span>
       <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=400&q=70" alt="Misaligned parts" class="phase-img" />
-      <p class="phase-text">3D-printed parts had cumulative tolerance errors. Joints were either too tight or too loose to function.</p>
+      <p class="phase-text">Afco OIL leak issue during Testing phase.</p>
     </div>
 
     <div class="phase">
@@ -1090,8 +1090,8 @@
   <div class="learning-header">
     <div class="learning-num">02</div>
     <div>
-      <div class="learning-title">Unexpected Twist in SIM Pipe</div>
-      <div class="learning-sub">Baja ATV Chassis — Suspension & Traction Test</div>
+      <div class="learning-title">Chassis Member bending (BAJA 2025)</div>
+      <div class="learning-sub">Baja ATV Chassis — Suspension Load Case</div>
     </div>
   </div>
 
@@ -1099,38 +1099,53 @@
 
     <div class="phase">
       <span class="phase-label plan">📐 What I Planned</span>
-      <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&q=70" alt="Chassis plan" class="phase-img" />
+      <img src="learning.Memberbending.planned.png" class="phase-img" />
       <p class="phase-text">
-        Upper suspension mount bracket was designed based on CAD geometry.
-        Load path was expected to transfer directly into the main chassis member.
+        The damper mount was designed to transfer suspension load directly into the chassis member.
+        In CAD and FEA, the load was assumed to act near a supported region so that forces would
+        flow through the chassis without creating excessive bending.
       </p>
     </div>
 
     <div class="phase">
-      <span class="phase-label wrong">💥 Went Wrong</span>
-      <img src="https://images.unsplash.com/photo-1591267990532-e5bdb1b0ceb8?w=400&q=70" alt="Bracket issue" class="phase-img" />
+      <span class="phase-label wrong">💥 What Went Wrong</span>
+      <img src="learning.Memberbending.wentwrong.jpeg" class="phase-img" />
       <p class="phase-text">
-        During fabrication, the upper suspension mount bracket became longer than in simulation.
-        This shifted the load application point away from the chassis node.
+        During fabrication, the damper mount was welded away from of a single tubular member
+        without additional support. This shifted the load application point away from a node and
+        created a long unsupported span in the pipe.
       </p>
     </div>
 
     <div class="phase">
       <span class="phase-label happened">⚙️ What Happened</span>
-      <img src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=400&q=70" alt="Twisted pipe" class="phase-img" />
+      <img src="learning.Memberbending.happened.jpeg" class="phase-img" />
       <p class="phase-text">
-        During Suspension & Traction test, the longer bracket created extra moment on the SIM pipe.
-        The pipe twisted under impact load, which was not predicted in simulation.
+        During suspension testing, the damper force acted at the center of the tube, creating a
+        high bending moment (M = F·L / 4). The pipe behaved like a simply supported beam with a
+        point load at mid-span, causing tensile stress on one side and compressive stress on the
+        other. The stress exceeded allowable limits, leading to local yielding, permanent bending,
+        and risk of weld cracking due to stress concentration.
       </p>
     </div>
 
     <div class="phase">
       <span class="phase-label fixed">✅ What I Did</span>
-      <img src="https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?w=400&q=70" alt="Fix" class="phase-img" />
+      <img src="learning.Memberbending.did.jpeg" class="phase-img" />
       <p class="phase-text">
-        Reduced bracket length and added reinforcement near the suspension mount.
-        Rechecked load path and verified stresses using FEA before final welding.
+        To improve load transfer, an additional pipe was welded at the damper mounting location to
+        create a proper load path and increase local stiffness. This reduced the effective span,
+        increased moment of inertia, and introduced triangulation. The load was redistributed into
+        multiple members, converting the loading condition from bending-dominant to axial-dominant
+        and significantly reducing peak stress and deformation.
       </p>
+    </div>
+
+    <!-- FEA Phase -->
+    <div class="phase" style="cursor:pointer;" onclick="openFEAModal2()">
+      <span class="phase-label plan">🖥️ Calculation & FEA PROOF</span>
+      <img src="learning.Memberbending.FEA.png" alt="FEA preview" class="phase-img" />
+      <p class="phase-text"> CLICK ANYWHERE on this card to view the 7-step FEA simulation of the chassis member bending failure analysis.</p>
     </div>
 
   </div>
@@ -1139,12 +1154,95 @@
     <span class="lesson-icon">💡</span>
     <p class="lesson-text">
       <strong>What I Learned</strong>
-      Small geometry changes between simulation and fabrication can change the load path completely.
-      Always validate bracket length, mounting position, and moment arm after fabrication changes.
+      Incorrect load path and mid-span loading can create large bending moments in chassis members.
+      Suspension mounts should always be connected near nodes or triangulated members to avoid
+      bending-dominated loading. Small fabrication changes can drastically affect stiffness,
+      stress distribution, and fatigue life, so load path validation must be done before welding.
     </p>
   </div>
+
 </div>
 
+<!-- FEA Modal Slideshow — Learning 2 -->
+<div id="feaModal2" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:1000; justify-content:center; align-items:center; flex-direction:column; padding:20px; box-sizing:border-box;">
+  <!-- Close Button -->
+  <span style="position:absolute; top:20px; right:30px; font-size:40px; color:white; cursor:pointer; z-index:1010;" onclick="closeFEAModal2()">&times;</span>
+
+  <!-- Slideshow Image -->
+  <div id="feaSwipeZone2" style="position:relative; max-width:100%; max-height:100%; display:flex; justify-content:center; align-items:center; width:100%; touch-action:pan-y;">
+    <button style="position:absolute; left:10px; font-size:40px; color:white; background:none; border:none; cursor:pointer; z-index:1010;" onclick="prevFEA2()">❮</button>
+    <img id="feaSlide2" src="learning.Memberbending.FEA1.jpg" style="max-width:100%; max-height:80vh; object-fit:contain; border-radius:8px; box-shadow:0 0 20px rgba(0,0,0,0.5);" />
+    <button style="position:absolute; right:10px; font-size:40px; color:white; background:none; border:none; cursor:pointer; z-index:1010;" onclick="nextFEA2()">❯</button>
+  </div>
+
+  <!-- Caption -->
+  <p id="feaCaption2" style="color:white; margin-top:15px; text-align:center; font-size:16px;">Step 1: Initial Mesh</p>
+</div>
+
+<script>
+  const feaImages2 = [
+    {src:'learning.Memberbending.FEA1.jpeg', caption:'Step 1: Initial Mesh'},
+    {src:'learning.Memberbending.FEA2.jpeg', caption:'Step 2: Material Assignment'},
+    {src:'learning.Memberbending.FEA3.jpeg', caption:'Step 3: Boundary Conditions'},
+    {src:'learning.Memberbending.FEA4.jpeg', caption:'Step 4: Force Calculated Using Energy Method was used as BC in TRANSIENT STRUCTURAL Analysis.'},
+    {src:'learning.Memberbending.FEA5.jpeg', caption:'Step 5: Deformation Results'},
+    {src:'learning.Memberbending.FEA6.jpeg', caption:'Step 6: Result Postprocessing'},
+    {src:'learning.Memberbending.FEA7.jpeg', caption:'Step 7: Stress Contours & Analysis'}
+  ];
+
+  let feaIndex2 = 0;
+  let feaTouchStartX2 = 0;
+  let feaTouchEndX2 = 0;
+
+  function openFEAModal2() {
+    document.getElementById('feaModal2').style.display = 'flex';
+    feaIndex2 = 0;
+    updateFEASlide2();
+
+    const zone = document.getElementById('feaSwipeZone2');
+    zone.addEventListener('touchstart', handleFEATouchStart2, { passive: true });
+    zone.addEventListener('touchend', handleFEATouchEnd2, { passive: true });
+  }
+
+  function closeFEAModal2() {
+    document.getElementById('feaModal2').style.display = 'none';
+
+    const zone = document.getElementById('feaSwipeZone2');
+    zone.removeEventListener('touchstart', handleFEATouchStart2);
+    zone.removeEventListener('touchend', handleFEATouchEnd2);
+  }
+
+  function handleFEATouchStart2(e) {
+    feaTouchStartX2 = e.changedTouches[0].screenX;
+  }
+
+  function handleFEATouchEnd2(e) {
+    feaTouchEndX2 = e.changedTouches[0].screenX;
+    const diff = feaTouchStartX2 - feaTouchEndX2;
+
+    if (Math.abs(diff) > 40) {
+      if (diff > 0) nextFEA2();
+      else          prevFEA2();
+    }
+  }
+
+  function prevFEA2() {
+    feaIndex2 = (feaIndex2 - 1 + feaImages2.length) % feaImages2.length;
+    updateFEASlide2();
+  }
+
+  function nextFEA2() {
+    feaIndex2 = (feaIndex2 + 1) % feaImages2.length;
+    updateFEASlide2();
+  }
+
+  function updateFEASlide2() {
+    const slide = document.getElementById('feaSlide2');
+    const caption = document.getElementById('feaCaption2');
+    slide.src = feaImages2[feaIndex2].src;
+    caption.textContent = feaImages2[feaIndex2].caption;
+  }
+</script>
 <!-- Learning 3 -->
 <div class="learning-card reveal">
   <div class="learning-header">
