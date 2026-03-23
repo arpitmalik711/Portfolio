@@ -1046,13 +1046,19 @@
 
 <script>
   const feaImages = [
-    {src:'learning.Armbending.FEA1.jpg', caption:'Step 1: Initial Mesh'},
-    {src:'learning.Armbending.FEA2.jpg', caption:'Step 2: Material Assignment'},
-    {src:'learning.Armbending.FEA3.jpg', caption:'Step 3: Boundary Conditions'},
-    {src:'learning.Armbending.FEA4.jpg', caption:'Step 4: Force Calculated Using Energy Method was used as BC in TRANSIENT STRUCTURAL Analysis.'},
-    {src:'learning.Armbending.FEA5.jpg', caption:'Step 5: Deformation Results'},
-    {src:'learning.Armbending.FEA6.jpg', caption:'Step 6: Result Postprocessing'},
-    {src:'learning.Armbending.FEA7.jpg', caption:'Step 7: Stress Contours & Analysis'}
+   {src:'learning.Armbending.FEA1.jpg', caption:'Step 1: Determination of obstacle geometry and relative dimensions for impact analysis.'},
+
+{src:'learning.Armbending.FEA2.jpg', caption:'Step 2: Identification of impact line between obstacle and tyre to define load direction.'},
+
+{src:'learning.Armbending.FEA3.jpg', caption:'Step 3: Impact Force calculation using energy method.'},
+
+{src:'learning.Armbending.FEA4.jpg', caption:'Step 4: Impact force calculated using energy method and applied as boundary condition in Transient Structural analysis.'},
+
+{src:'learning.Armbending.FEA5.jpg', caption:'Step 5: Deformation results showing excessive bending in suspension arm pipe.'},
+
+{src:'learning.Armbending.FEA6.jpg', caption:'Step 6: Design modification — welding primary pipe support to improve load path during competition conditions.'},
+
+{src:'learning.Armbending.FEA7.jpg', caption:'Step 7: FEA results after reinforcement showing reduced deformation and improved structural stiffness.'}
   ];
 
   let feaIndex = 0;
@@ -1144,7 +1150,7 @@
     <!-- FEA Phase -->
     <div class="phase" style="cursor:pointer;" onclick="openFEAModal2()">
       <span class="phase-label plan">🖥️ Calculation & FEA PROOF</span>
-      <img src="learning.Memberbending.FEA.png" alt="FEA preview" class="phase-img" />
+      <img src="learning.Memberbending.FEA.jpeg.png" alt="FEA preview" class="phase-img" />
       <p class="phase-text"> CLICK ANYWHERE on this card to view the 7-step FEA simulation of the chassis member bending failure analysis.</p>
     </div>
 
