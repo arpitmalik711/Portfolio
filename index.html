@@ -441,8 +441,71 @@
     .phases-grid { grid-template-columns: repeat(4, 1fr); }
     footer { padding: 1.5rem 3rem; }
   }
+  /* CASE STUDY BANNER */
+.case-banner {
+  width: 100%;
+  background: linear-gradient(90deg, #f97316, #3b82f6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+
+  padding: 0.6rem 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 300;
+
+  animation: slideDown 0.6s ease;
+}
+
+.case-banner a {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  color: #0a0a0a;
+  text-decoration: none;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.case-banner a:hover {
+  opacity: 0.85;
+}
+
+.case-close {
+  font-size: 0.9rem;
+  cursor: pointer;
+  color: #0a0a0a;
+  opacity: 0.7;
+}
+
+.case-close:hover {
+  opacity: 1;
+}
+
+/* Animation */
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
 </style>
+
 </head>
+<!-- CASE STUDY BANNER -->
+<div class="case-banner" id="caseBanner">
+  
+  <a href="https://arpitmalik711.github.io/Memberbend.casestudy/" target="_blank" rel="noopener">
+    🚧 Case Study: From FEA Assumptions to Real Failure → Read Full Breakdown
+  </a>
+
+  <!-- Close Button -->
+  <span class="case-close" onclick="closeBanner()">✕</span>
+
+</div>
 <body>
 
 <!-- NAV -->
